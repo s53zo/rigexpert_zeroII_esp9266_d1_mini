@@ -22,10 +22,15 @@ No LCD, no rotary encoder – perfect for Node-RED, InfluxDB/Grafana, Python scr
 | – | 5 V supply, SMA OSL kit | (for later calibration) |
 
 Zero-II pad ⇄ Shifter HV LV ⇄ D1 mini pin
+
 ────────────────────────────────────────────────────
-SCL (A) ──► HV1 D1 (GPIO5 / SCL)
-SDA (B) ──► HV2 D2 (GPIO4 / SDA)
-RST (pad 6) ◄── HV3 D0 (GPIO16 - open-drain)
+
+SCL (A) ──► HV1  ──► D1 (GPIO5 / SCL)
+
+SDA (B) ──► HV2  ──► D2 (GPIO4 / SDA)
+
+RST (pad 6) ◄── HV3 ◄── D0 (GPIO16 - open-drain)
+
 5 V / GND ─────────────── common rails
 
 * slide-switch on Zero-II ➜ **EXT** (power from 5 V rail)  
