@@ -55,13 +55,23 @@ RST (pad 6) ◄── HV3 D0 (GPIO16 - open-drain)
 
 ---
 
-## 3 MQTT API
+### 3 MQTT API
 
 | Topic | Direction | Payload |
 |-------|-----------|---------|
 | `matrigs/zeroii/cmd` | → bridge | frequency in **Hz** (ASCII) range 100 000 … 1 000 000 000 |
 | `matrigs/zeroii/data` | ← bridge | JSON reply (`f,R,X,SWR,RL,Zmag,phase`) |
 | `matrigs/zeroii/debug` | ← bridge | verbose log (auto-off 60 s after boot) |
+
+### 4 How it works
+Reset & I²C – D0 sends an open-drain pulse to the Zero-II RST pad, then I²C starts at 400 kHz.
+Wi-Fi + Web portal – STA first, AP fallback, OTA ready.
+MQTT – subscribes to …/cmd, buffer size enlarged to 2 kB.
+Measurement flow
+receive f → send 0xA3 measure → wait 60 ms
+read 18-byte frame, CRC check
+compute |Z| and phase, publish JSON
+timeout → error JSON + automatic reset pulse.
 
 Example data payload:
 
